@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>neuwal barometer</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div class="container" id="content">
+      <h1>neuwal barometer</h1>
+
+      <section id="page-1" class="page row">
+        <div class="col-md-12">
+          <h2>Einleitung</h2>
+
+          <p>
+            Lorem ipsum dolor sit amet, cu quando impedit cotidieque duo, vitae nostrum assentior
+            ne nam, sea an dico sint ullum. Ad has justo errem, labore everti posidonium et duo.
+            Harum dolor fastidii ne quo. Eam ea mazim adipisci, audiam hendrerit eum ea. Wisi
+            mucius mel te. Mea virtute omnesque periculis ea.
+          </p>
+
+          <h3>Wähle einen Kandidaten..</h3>
+        </div>
+
+        <div class="candidates">
+
+        </div>
+      </section>
+
+      <section id="page-2" class="page hidden">
+        <h2>Wie würdest du als <span class="candidateName">???</span> abstimmen?</h2>
+
+        <div class="questions">
+
+        </div>
+      </section>
+
+      <section id="page-3" class="page row hidden">
+        <h2>Ergebnisse</h2>
+
+
+      </section>
+    </div>
+
+    <div class="templates hidden">
+      <div class="col-md-4 candidate">
+        <a href="">
+          <img class="img-responsive" src="" alt="" />
+        </a>
+      </div>
+    </div>
+
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+      'use strict';
+
+      var questions = [
+        'Frage 1: Lorem ipsum dodor...',
+        'Frage 2: Lorem ipsum dodor...',
+        'Frage 3: Lorem ipsum dodor...',
+        'Frage 4: Lorem ipsum dodor...',
+        'Frage 5: Lorem ipsum dodor...',
+        'Frage 6: Lorem ipsum dodor...',
+        'Frage 7: Lorem ipsum dodor...',
+        'Frage 8: Lorem ipsum dodor...',
+        'Frage 9: Lorem ipsum dodor...',
+        'Frage 10: Lorem ipsum dodor...'
+      ];
+
+      var candidates = [
+        {
+          id : 'spoe-haeupl' ,
+          name: 'Michael Häupl',
+          party: 'spö',
+          imageUrl: 'images/candiates/spoe-haeupl.jpg'
+        },
+        {
+          id : 'spoe-haeupl' ,
+          name: 'Michael Häupl',
+          party: 'spö',
+          imageUrl: 'images/candiates/spoe-haeupl.jpg'
+        },
+        {
+          id : 'spoe-haeupl' ,
+          name: 'Michael Häupl',
+          party: 'spö',
+          imageUrl: 'images/candiates/spoe-haeupl.jpg'
+        },
+        {
+          id : 'spoe-haeupl' ,
+          name: 'Michael Häupl',
+          party: 'spö',
+          imageUrl: 'images/candiates/spoe-haeupl.jpg'
+        },
+        {
+          id : 'spoe-haeupl' ,
+          name: 'Michael Häupl',
+          party: 'spö',
+          imageUrl: 'images/candiates/spoe-haeupl.jpg'
+        },
+        {
+          id : 'spoe-haeupl' ,
+          name: 'Michael Häupl',
+          party: 'spö',
+          imageUrl: 'images/candiates/spoe-haeupl.jpg'
+        }
+      ];
+
+      var currentCandidate = null;
+
+      $(function() {
+        init();
+
+        function init() {
+          currentCandidate = null;
+
+          // set url to current page
+          showPage(window.location.hash);
+
+          $(window).on('hashchange', function(event) {
+            event.preventDefault();
+            showPage(window.location.hash);
+          });
+        }
+
+        function showPage(hash) {
+          if (!hash) {
+            hash = '#page-1';
+          }
+          var value = hash.match(/#?(page-[0-9])(\/([a-z]+-[a-z]+)).*/);
+          var page = '';
+          var subpage = '';
+          if (!value) {
+            page = 'page-1';
+          } else {
+            page = value[1];
+            subpage = value[3];
+          }
+
+          switch (page) {
+            default:
+            case 'page-1':
+              initPage1();
+              break;
+            case 'page-2':
+              initPage2(subpage);
+              break;
+          }
+
+          $('.page').addClass('hidden');
+          $('#' + page).removeClass('hidden');
+        }
+
+        function initPage1() {
+          var $candidates = $('.candidates').empty();
+
+          $(candidates).each(function(index, candidate) {
+            var $candidate = $('.templates .candidate').clone();
+            $candidate.find('a').attr('href', ('#page-2/' + candidate.id))
+                .find('img').attr('src', candidate.imageUrl);
+            $candidates.append($candidate);
+          });
+        }
+
+        function getCandidateById(id) {
+          for (var index = 0; index < candidates.length; index++) {
+            if (candidates[index].id === id) {
+              return candidates[index];
+            }
+          }
+          return false;
+        }
+
+        function initPage2(subpage) {
+          currentCandidate = getCandidateById(subpage);
+          if (!currentCandidate) {
+            showPage();
+            return;
+          }
+          var candidateName = $('.candidateName').empty();
+          candidateName.append(currentCandidate.name);
+
+          $('.questions').empty();
+          $(questions).each(function(index, question) {
+            var questionHtml = $('<p>').append(question);
+            $('.questions').append(questionHtml);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
