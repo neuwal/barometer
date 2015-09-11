@@ -6,11 +6,12 @@
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/bootstrap-slider.min.css">
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <div class="container" id="content">
-      <h1>neuwal barometer</h1>
+      <h1><a href="#">neuwal barometer</a></h1>
 
       <section id="page-1" class="page row">
         <div class="col-md-12">
@@ -37,78 +38,160 @@
         <div class="questions">
 
         </div>
+
+        <button class="reset">Zurücksetzen</button>
+        <button class="next">Zur Auswertung</button>
       </section>
 
-      <section id="page-3" class="page row hidden">
-        <h2>Ergebnisse</h2>
+      <section id="page-3" class="page hidden">
+        <h2>Ergebnisse: <span class="candidateName">???</span></h2>
 
+        <div class="results">
 
+        </div>
+
+        <button>Zurück zum Start</button>
       </section>
     </div>
 
-    <div class="templates hidden">
+    <div id="templates" class="hidden">
       <div class="col-md-4 candidate">
-        <a href="">
+        <a href="#">
           <img class="img-responsive" src="" alt="" />
         </a>
+      </div>
+      <div class="row question">
+        <div class="col-md-6 text"></div>
+        <div class="col-md-6 answer"><div class="sliderHandle"></div></div>
+      </div>
+      <div class="row result">
+        <div class="col-md-6 text"></div>
+        <div class="col-md-6 answer"><</div>
       </div>
     </div>
 
     <script src="js/jquery-1.11.3.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-slider.min.js"></script>
     <script>
       'use strict';
 
-      var questions = [
-        'Frage 1: Lorem ipsum dodor...',
-        'Frage 2: Lorem ipsum dodor...',
-        'Frage 3: Lorem ipsum dodor...',
-        'Frage 4: Lorem ipsum dodor...',
-        'Frage 5: Lorem ipsum dodor...',
-        'Frage 6: Lorem ipsum dodor...',
-        'Frage 7: Lorem ipsum dodor...',
-        'Frage 8: Lorem ipsum dodor...',
-        'Frage 9: Lorem ipsum dodor...',
-        'Frage 10: Lorem ipsum dodor...'
-      ];
-
       var candidates = [
         {
-          id : 'spoe-haeupl' ,
-          name: 'Michael Häupl',
-          party: 'spö',
-          imageUrl: 'images/candiates/spoe-haeupl.jpg'
+          "id": "spoe-haeupl",
+          "name": "Michael Häupl",
+          "party": {
+            "shortname": "SPÖ",
+            "name": "Sozialdemokratische Partei Österreichs"
+          },
+          "imageUrl": "images/candiates/spoe-haeupl.jpg"
         },
         {
-          id : 'spoe-haeupl' ,
-          name: 'Michael Häupl',
-          party: 'spö',
-          imageUrl: 'images/candiates/spoe-haeupl.jpg'
+          "id": "fpoe-strache",
+          "name": "Heinz-Christian Strache",
+          "party": {
+            "shortname": "FPÖ",
+            "name": "Freiheitliche Partei Österreichs"
+          },
+          "imageUrl": "images/candiates/spoe-haeupl.jpg"
         },
         {
-          id : 'spoe-haeupl' ,
-          name: 'Michael Häupl',
-          party: 'spö',
-          imageUrl: 'images/candiates/spoe-haeupl.jpg'
+          "id": "oevp-juraczka",
+          "name": "Manfred Juraczka",
+          "party": {
+            "shortname": "ÖVP",
+            "name": "Österreichische Volkspartei"
+          },
+          "imageUrl": "images/candiates/spoe-haeupl.jpg"
         },
         {
-          id : 'spoe-haeupl' ,
-          name: 'Michael Häupl',
-          party: 'spö',
-          imageUrl: 'images/candiates/spoe-haeupl.jpg'
+          "id": "gruene-vassilakou",
+          "name": "Maria Vassilakou",
+          "party": {
+            "shortname": "GRÜNE",
+            "name": "Die Grünen – Die Grüne Alternative"
+          },
+          "imageUrl": "images/candiates/spoe-haeupl.jpg"
         },
         {
-          id : 'spoe-haeupl' ,
-          name: 'Michael Häupl',
-          party: 'spö',
-          imageUrl: 'images/candiates/spoe-haeupl.jpg'
+          "id": "neos-meinl-reisinger",
+          "name": "Beate Meinl-Reisinger",
+          "party": {
+            "shortname": "NEOS",
+            "name": "NEOS – Das Neue Österreich und Liberales Forum"
+          },
+          "imageUrl": "images/candiates/spoe-haeupl.jpg"
         },
         {
-          id : 'spoe-haeupl' ,
-          name: 'Michael Häupl',
-          party: 'spö',
-          imageUrl: 'images/candiates/spoe-haeupl.jpg'
+          "id": "andas-okropiridse",
+          "name": "Juliana Okropiridse",
+          "party": {
+            "shortname": "ANDAS",
+            "name": "Wien anders"
+          },
+          "imageUrl": "images/candiates/spoe-haeupl.jpg"
         }
+      ];
+
+      var questions = [
+        {
+          "text": "test1",
+          "answers": {
+            "spoe-haeupl": {
+              "answer": "1",
+              "youtubeVideoId": "6MDf83CAbxw"
+            },
+            "fpoe-strache": {
+              "answer": "3",
+              "youtubeVideoId": "6MDf83CAbxw"
+            },
+            "oevp-juraczka": {
+              "answer": "1",
+              "youtubeVideoId": "6MDf83CAbxw"
+            },
+            "gruene-vassilakou": {
+              "answer": "1",
+              "youtubeVideoId": "6MDf83CAbxw"
+            },
+            "neos-meinl-reisinger": {
+              "answer": "1",
+              "youtubeVideoId": "6MDf83CAbxw"
+            },
+            "andas-okropiridse": {
+              "answer": "1",
+              "youtubeVideoId": "6MDf83CAbxw"
+            }
+          }
+        },
+        {
+          "text": "test2",
+          "answers": {
+            "spoe-haeupl": {
+              "answer": "3",
+              "youtubeVideoId": "6MDf83CAbxw"
+            },
+            "fpoe-strache": {
+              "answer": "1",
+              "youtubeVideoId": "6MDf83CAbxw"
+            },
+            "oevp-juraczka": {
+              "answer": "1",
+              "youtubeVideoId": "6MDf83CAbxw"
+            },
+            "gruene-vassilakou": {
+              "answer": "1",
+              "youtubeVideoId": "6MDf83CAbxw"
+            },
+            "neos-meinl-reisinger": {
+              "answer": "1",
+              "youtubeVideoId": "6MDf83CAbxw"
+            },
+            "andas-okropiridse": {
+              "answer": "1",
+              "youtubeVideoId": "6MDf83CAbxw"
+            }
+          }
+        },
       ];
 
       var currentCandidate = null;
@@ -150,6 +233,9 @@
             case 'page-2':
               initPage2(subpage);
               break;
+            case 'page-3':
+              initPage3(subpage);
+              break;
           }
 
           $('.page').addClass('hidden');
@@ -160,7 +246,7 @@
           var $candidates = $('.candidates').empty();
 
           $(candidates).each(function(index, candidate) {
-            var $candidate = $('.templates .candidate').clone();
+            var $candidate = $('#templates').find('.candidate').clone();
             $candidate.find('a').attr('href', ('#page-2/' + candidate.id))
                 .find('img').attr('src', candidate.imageUrl);
             $candidates.append($candidate);
@@ -182,13 +268,72 @@
             showPage();
             return;
           }
-          var candidateName = $('.candidateName').empty();
-          candidateName.append(currentCandidate.name);
+          var $page = $('#page-2');
+          $page.find('.candidateName').html(currentCandidate.name);
 
-          $('.questions').empty();
+          $('.questions', $page).empty();
           $(questions).each(function(index, question) {
-            var questionHtml = $('<p>').append(question);
-            $('.questions').append(questionHtml);
+            var $question = $('#templates').find('.question').clone();
+            $question.attr('id', 'question-' + index);
+            $('.text', $question).html(question.text);
+
+            var $slider = $('.sliderHandle', $question).slider();
+            var key = currentCandidate.id + '.question-' + index;
+            var value = sessionStorage.getItem(key);
+            if (value !== null) {
+              $slider = $slider.slider('setValue', parseInt(value));
+            }
+
+            value = $slider.slider('getValue');
+            sessionStorage.setItem(key, value);
+            $slider.on('change', function(event) {
+              var value = event.value.newValue;
+              sessionStorage.setItem(key, value);
+            });
+            $('.questions', $page).append($question);
+          });
+
+          $('button.reset', $page).on('click', function(event) {
+            event.preventDefault();
+            $('.question', $page).each(function(index, question) {
+              $('.sliderHandle', question).slider('setValue', 5);
+              var key = currentCandidate.id + '.question-' + index;
+              sessionStorage.setItem(key, 5);
+            });
+          });
+
+          $('button.next', $page).on('click', function(event) {
+            event.preventDefault();
+            window.location.hash = '#page-3/' + currentCandidate.id;
+          });
+        }
+
+        function initPage3(subpage) {
+          currentCandidate = getCandidateById(subpage);
+          if (!currentCandidate) {
+            showPage();
+            return;
+          }
+          var $page = $('#page-3');
+          $page.find('.candidateName').html(currentCandidate.name);
+
+          $('.results', $page).empty();
+          $(questions).each(function(index, question) {
+            var $result = $('#templates').find('.result').clone();
+            $result.attr('id', 'question-' + index);
+            $('.text', $result).html(question.text);
+
+            var key = currentCandidate.id + '.question-' + index;
+            var userValue = sessionStorage.getItem(key);
+            var candidateValue = question.answers[currentCandidate.id].answer;
+            $('.answer', $result).html('user: ' + userValue + ', candidate: ' + candidateValue);
+
+            $('.results', $page).append($result);
+
+            $('button', $page).on('click', function(event) {
+              event.preventDefault();
+              window.location.hash = '#';
+            });
           });
         }
       });
