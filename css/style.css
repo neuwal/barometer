@@ -3,6 +3,7 @@
     margin-bottom: 10px;
 }
 
+.result .text,
 .question .text {
     font-size: 26px;
 }
