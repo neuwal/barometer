@@ -3,6 +3,12 @@
     margin-bottom: 10px;
 }
 
+.candidate a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
 .result .text,
 .question .text {
     font-size: 26px;
