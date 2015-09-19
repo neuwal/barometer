@@ -39,8 +39,8 @@
 
         </div>
 
-        <button class="reset">Zurücksetzen</button>
-        <button class="next">Zur Auswertung</button>
+        <button class="btn btn-primary reset">Zurücksetzen</button>
+        <button class="btn btn-primary next">Zur Auswertung</button>
       </section>
 
       <section id="page-3" class="page hidden">
@@ -50,14 +50,26 @@
 
         </div>
 
-        <button>Zurück zum Start</button>
+        <div class="finalResult">
+          <span class="congratulations"></span><br />
+          Score: <span class="score"></span>
+        </div>
+
+        <p>
+          Auf <a class="facebook" href="" target="_blank">Facebook</a> oder <a class="twitter" href="" target="_blank">Twitter</a> teilen!
+        </p>
+
+
+        <button class="btn btn-primary">Zurück zum Start</button>
       </section>
     </div>
 
     <div id="templates" class="hidden">
       <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 candidate">
         <a href="#">
-          <img class="img-responsive" src="" alt="" />
+          <p>
+            <span class="party"></span> - <span class="name"></span>
+          </p>
         </a>
       </div>
       <div class="row question">
@@ -65,8 +77,18 @@
         <div class="col-md-6 answer"><div class="sliderHandle"></div></div>
       </div>
       <div class="row result">
-        <div class="col-md-6 text"></div>
-        <div class="col-md-6 answer"><</div>
+        <div class="col-md-12 text"></div>
+        <div class="col-md-6 video">
+          <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="col-md-6 answer">
+          <p>
+            Du hast du <span class="userValue">x</span> getippt, <span class="candidateName"></span> hat <span class="candidateValue">x</span> geantwortet.
+          </p>
+          <p class="resultMeaning">
+
+          </p>
+        </div>
       </div>
     </div>
 
@@ -524,6 +546,17 @@
         }
       ];
 
+      var congratulationLines = [
+        {
+          "text": "Du bist super gut.",
+          "minScore": 90
+        },
+        {
+          "text": "Fail.",
+          "minScore": 0
+        }
+      ];
+
       var currentCandidate = null;
 
       $(function() {
@@ -577,8 +610,12 @@
 
           $(candidates).each(function(index, candidate) {
             var $candidate = $('#templates').find('.candidate').clone();
-            $candidate.find('a').attr('href', ('#page-2/' + candidate.id))
+            var $a = $candidate.find('a');
+            $a.attr('href', ('#page-2/' + candidate.id))
+                .css({backgroundImage : 'url(' + candidate.imageUrl + ')'})
                 .find('img').attr('src', candidate.imageUrl);
+            $a.find('.name').html(candidate.name);
+            $a.find('.party').html(candidate.party.shortname);
             $candidates.append($candidate);
           });
         }
@@ -647,23 +684,58 @@
           var $page = $('#page-3');
           $page.find('.candidateName').html(currentCandidate.name);
 
+          var score = 100;
+
           $('.results', $page).empty();
           $(questions).each(function(index, question) {
+            var key = currentCandidate.id + '.question-' + index;
+            var userValue = sessionStorage.getItem(key);
+            var candidateValue = question.answers[currentCandidate.id].answer;
+            var difference = Math.abs(userValue - candidateValue);
+            score -= difference;
+
             var $result = $('#templates').find('.result').clone();
             $result.attr('id', 'question-' + index);
             $('.text', $result).html(question.text);
 
-            var key = currentCandidate.id + '.question-' + index;
-            var userValue = sessionStorage.getItem(key);
-            var candidateValue = question.answers[currentCandidate.id].answer;
-            $('.answer', $result).html('user: ' + userValue + ', candidate: ' + candidateValue);
 
-            $('.results', $page).append($result);
+            $page.find('.candidateName').html(currentCandidate.name);
+            $result.find('.userValue').html(userValue);
+            $result.find('.candidateValue').html(candidateValue);
+            if (difference > 0) {
+              $result.find('.resultMeaning').html('- ' + difference);
+            } else {
+              $result.find('.resultMeaning').html('Perfekt!');
+            }
+            var videoUrl = 'https://www.youtube-nocookie.com/embed/';
+            videoUrl += question.answers[currentCandidate.id].youtubeVideoId + '?rel=0&amp;showinfo=0';
 
-            $('button', $page).on('click', function(event) {
-              event.preventDefault();
-              window.location.hash = '#';
-            });
+            $result.find('.video iframe').attr('src', videoUrl);
+
+            $page.find('.results').append($result);
+          });
+
+          var congratulationLine = '';
+          var maxScore = 0;
+          $(congratulationLines).each(function(index, line) {
+            if (line.minScore <= score && maxScore <= line.minScore) {
+              congratulationLine = line.text;
+            }
+          });
+
+          $page.find('.congratulations').html(congratulationLine);
+
+          $page.find('.score').html(score);
+
+          var shareText = 'Ich habe als ' + currentCandidate.name + ' eine Score von ' + score + ' erreicht!';
+          var facebookShareLink = '//www.facebook.com/sharer/sharer.php?u=' + window.location.href;
+          var twitterShareLink = '//twitter.com/home?status=' + shareText + '%20' + window.location.href;
+          $page.find('.facebook').attr('href', facebookShareLink);
+          $page.find('.twitter').attr('href', twitterShareLink);
+
+          $('button', $page).on('click', function(event) {
+            event.preventDefault();
+            window.location.hash = '#';
           });
         }
       });
