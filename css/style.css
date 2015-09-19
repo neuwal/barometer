@@ -31,6 +31,11 @@
     opacity: 1;
 }
 
+.question,
+.result {
+    margin-bottom: 50px;
+}
+
 .result .text,
 .question .text {
     font-size: 26px;
@@ -38,4 +43,8 @@
 
 .finalResult {
     font-size: 60px;
+}
+
+.slider.slider-horizontal {
+    width: 100%;
 }
