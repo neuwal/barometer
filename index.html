@@ -74,7 +74,7 @@
       </div>
       <div class="row question">
         <div class="col-md-6 text"></div>
-        <div class="col-md-6 answer"><div class="sliderHandle"></div></div>
+        <div class="col-md-6 answer"><input class="sliderHandle" /></div>
       </div>
       <div class="row result">
         <div class="col-md-12 text"></div>
@@ -644,7 +644,9 @@
             $question.attr('id', 'question-' + index);
             $('.text', $question).html(question.text);
 
-            var $slider = $('.sliderHandle', $question).slider();
+            var $slider = $('.sliderHandle', $question).slider({
+              min: 1
+            });
             var key = currentCandidate.id + '.question-' + index;
             var value = sessionStorage.getItem(key);
             if (value !== null) {
