@@ -709,7 +709,7 @@
             } else {
               $result.find('.resultMeaning').html('Perfekt!');
             }
-            var videoUrl = 'https://www.youtube-nocookie.com/embed/';
+            var videoUrl = '//www.youtube-nocookie.com/embed/';
             videoUrl += question.answers[currentCandidate.id].youtubeVideoId + '?rel=0&amp;showinfo=0';
 
             $result.find('.video iframe').attr('src', videoUrl);
@@ -737,6 +737,7 @@
 
           $('button', $page).on('click', function(event) {
             event.preventDefault();
+            $page.find('.video iframe').attr('src', '');
             window.location.hash = '#';
           });
         }
