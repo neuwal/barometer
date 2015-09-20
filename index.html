@@ -24,7 +24,7 @@
             mucius mel te. Mea virtute omnesque periculis ea.
           </p>
 
-          <h3>Wähle einen Kandidaten..</h3>
+          <h3>Wähle eine Kandidatin oder einen Kandidaten..</h3>
         </div>
 
         <div class="candidates">
@@ -61,7 +61,8 @@
         </p>
 
 
-        <button class="btn btn-primary">Zurück zum Start</button>
+        <button class="btn btn-primary back">Zurück</button>
+        <button class="btn btn-success start">Zurück zum Start</button>
       </section>
     </div>
 
@@ -74,27 +75,29 @@
         </a>
       </div>
       <div class="row question">
-        <div class="col-md-6 text"></div>
+        <div class="col-md-6 text"><h3></h3></div>
         <div class="col-md-6 answer">
           <input class="sliderHandle" /><br />
           <span class="pull-left">Ablehnung</span><span class="pull-right">Zustimmung</span>
         </div>
       </div>
       <div class="row result">
-        <div class="col-md-12 text"></div>
+        <div class="col-md-12 text"><h3></h3></div>
         <div class="col-md-6 video">
-          <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+          <div>
+            <iframe src="" frameborder="0" allowfullscreen></iframe>
+          </div>
         </div>
         <div class="col-md-6 answer">
-          <div class="col-md-4 userValue">
+          <div class="col-xs-4 userValue">
             <img src="" alt="" /><br />
             <span>Deine Einschätzung</span>
           </div>
-          <div class="col-md-4 candidateValue">
+          <div class="col-xs-4 candidateValue">
             <img src="" alt="" /><br />
             <span class="candidateName"></span>
           </div>
-          <div class="col-md-4 resultMeaning">
+          <div class="col-xs-4 resultMeaning">
             <img src="" alt="" /><br />
             <span>Differenz</span>
           </div>
@@ -654,7 +657,7 @@
             $('.questions', $page).append($question);
 
             $question.attr('id', 'question-' + index);
-            $('.text', $question).html((index + 1) + '. ' + question.text);
+            $('.text h3', $question).html((index + 1) + '. ' + question.text);
 
             var $slider = $('.sliderHandle', $question).slider({
               min: 1,
@@ -717,7 +720,7 @@
 
             var $result = $('#templates').find('.result').clone();
             $result.attr('id', 'question-' + index);
-            $('.text', $result).html((index + 1) + '. ' + question.text);
+            $('.text h3', $result).html((index + 1) + '. ' + question.text);
 
 
             $result.find('.candidateName').html(currentCandidate.name);
@@ -750,7 +753,13 @@
           $page.find('.facebook').attr('href', facebookShareLink);
           $page.find('.twitter').attr('href', twitterShareLink);
 
-          $('button', $page).on('click', function(event) {
+
+          $('button.back', $page).on('click', function(event) {
+            event.preventDefault();
+            window.location.hash = '#page-2/' + currentCandidate.id;
+          });
+
+          $('button.start', $page).on('click', function(event) {
             event.preventDefault();
             $page.find('.video iframe').attr('src', '');
             window.location.hash = '#';
