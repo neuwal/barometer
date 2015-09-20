@@ -14,7 +14,6 @@ h2 {
 .candidate {
     margin-top: 10px;
     margin-bottom: 10px;
-    height: 180px;
 }
 
 .candidate a {
@@ -24,7 +23,8 @@ h2 {
     padding: 20px;
     display: inline-block;
     width: 100%;
-    height: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 9 / 16 */
     transition: box-shadow 0.4s;
 }
 
