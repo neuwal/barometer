@@ -11,7 +11,7 @@
   </head>
   <body>
     <div class="container" id="content">
-      <h1><a href="#">neuwal barometer</a></h1>
+      <h1><a href="#" class="text-hide">neuwal barometer</a></h1>
 
       <section id="page-1" class="page row">
         <div class="col-md-12">
@@ -39,8 +39,9 @@
 
         </div>
 
+        <button class="btn btn-primary back">Zurück</button>
         <button class="btn btn-primary reset">Zurücksetzen</button>
-        <button class="btn btn-primary next">Zur Auswertung</button>
+        <button class="btn btn-success next">Zur Auswertung</button>
       </section>
 
       <section id="page-3" class="page hidden">
@@ -660,6 +661,11 @@
               sessionStorage.setItem(key, value);
             });
             $('.questions', $page).append($question);
+          });
+
+          $('button.back', $page).on('click', function(event) {
+            event.preventDefault();
+            window.location.hash = '#page-1';
           });
 
           $('button.reset', $page).on('click', function(event) {
