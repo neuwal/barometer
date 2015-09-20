@@ -75,7 +75,10 @@
       </div>
       <div class="row question">
         <div class="col-md-6 text"></div>
-        <div class="col-md-6 answer"><input class="sliderHandle" /></div>
+        <div class="col-md-6 answer">
+          <input class="sliderHandle" /><br />
+          <span class="pull-left">Ablehnung</span><span class="pull-right">Zustimmung</span>
+        </div>
       </div>
       <div class="row result">
         <div class="col-md-12 text"></div>
@@ -642,12 +645,17 @@
           $('.questions', $page).empty();
           $(questions).each(function(index, question) {
             var $question = $('#templates').find('.question').clone();
+            $('.questions', $page).append($question);
+
             $question.attr('id', 'question-' + index);
-            $('.text', $question).html(question.text);
+            $('.text', $question).html((index + 1) + '. ' + question.text);
 
             var $slider = $('.sliderHandle', $question).slider({
-              min: 1
+              min: 1,
+              ticks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+              /*ticks_labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']*/
             });
+            $slider.find('.slider-handle').trigger('click');
             var key = currentCandidate.id + '.question-' + index;
             var value = sessionStorage.getItem(key);
             if (value !== null) {
@@ -660,7 +668,6 @@
               var value = event.value.newValue;
               sessionStorage.setItem(key, value);
             });
-            $('.questions', $page).append($question);
           });
 
           $('button.back', $page).on('click', function(event) {
@@ -704,7 +711,7 @@
 
             var $result = $('#templates').find('.result').clone();
             $result.attr('id', 'question-' + index);
-            $('.text', $result).html(question.text);
+            $('.text', $result).html((index + 1) + '. ' + question.text);
 
 
             $result.find('.candidateName').html(currentCandidate.name);

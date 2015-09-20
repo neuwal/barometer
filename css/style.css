@@ -54,4 +54,31 @@ h1 a {
 
 .slider.slider-horizontal {
     width: 100%;
+    margin-bottom: 24px!important;
+}
+
+.slider .slider-handle {
+    background-color: #000000;
+    background-image: none;
+}
+
+.slider .tooltip.top {
+    margin-top: -48px;
+    margin-left: -12.5px!important;
+    padding: 0;
+}
+
+.tooltip.top .tooltip-arrow {
+    display: none;
+}
+
+.slider .tooltip-inner {
+    background-image: url(../images/pfeilonly.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    width: 25px;
+    height: 45px;
+    border-radius: 0;
+    padding: 3px 0px;
 }
