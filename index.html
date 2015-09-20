@@ -86,12 +86,18 @@
           <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
         </div>
         <div class="col-md-6 answer">
-          <p>
-            Du hast du <span class="userValue">x</span> getippt, <span class="candidateName"></span> hat <span class="candidateValue">x</span> geantwortet.
-          </p>
-          <p class="resultMeaning">
-
-          </p>
+          <div class="col-md-4 userValue">
+            <img src="" alt="" /><br />
+            <span>Deine Einschätzung</span>
+          </div>
+          <div class="col-md-4 candidateValue">
+            <img src="" alt="" /><br />
+            <span class="candidateName"></span>
+          </div>
+          <div class="col-md-4 resultMeaning">
+            <img src="" alt="" /><br />
+            <span>Differenz</span>
+          </div>
         </div>
       </div>
     </div>
@@ -715,13 +721,9 @@
 
 
             $result.find('.candidateName').html(currentCandidate.name);
-            $result.find('.userValue').html(userValue);
-            $result.find('.candidateValue').html(candidateValue);
-            if (difference > 0) {
-              $result.find('.resultMeaning').html('- ' + difference);
-            } else {
-              $result.find('.resultMeaning').html('Perfekt!');
-            }
+            $result.find('.userValue img').attr('alt', userValue).attr('src', 'images/numbers/grey/g' + userValue + '.png');
+            $result.find('.candidateValue img').attr('alt', candidateValue).attr('src', 'images/numbers/black/' + candidateValue + '.png');
+            $result.find('.resultMeaning img').attr('alt', difference).attr('src', 'images/numbers/white/w' + difference + '.png');
             var videoUrl = '//www.youtube-nocookie.com/embed/';
             videoUrl += question.answers[currentCandidate.id].youtubeVideoId + '?rel=0&amp;showinfo=0';
 

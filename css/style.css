@@ -46,6 +46,20 @@ h1 {
     font-size: 26px;
 }
 
+.result .answer {
+    text-align: center;
+}
+
+.result .answer span {
+    font-weight: bold;
+}
+
+.result img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+}
+
 .finalResult {
     font-size: 60px;
 }
