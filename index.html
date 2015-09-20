@@ -85,7 +85,8 @@
         <div class="col-md-12 text"><h3></h3></div>
         <div class="col-md-6 video">
           <div>
-            <iframe src="" frameborder="0" allowfullscreen></iframe>
+            <div class="playHandle"></div>
+            <iframe class="hidden" src="" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
         <div class="col-md-6 answer">
@@ -727,10 +728,19 @@
             $result.find('.userValue img').attr('alt', userValue).attr('src', 'images/numbers/grey/g' + userValue + '.png');
             $result.find('.candidateValue img').attr('alt', candidateValue).attr('src', 'images/numbers/black/' + candidateValue + '.png');
             $result.find('.resultMeaning img').attr('alt', difference).attr('src', 'images/numbers/white/w' + difference + '.png');
-            var videoUrl = '//www.youtube-nocookie.com/embed/';
-            videoUrl += question.answers[currentCandidate.id].youtubeVideoId + '?rel=0&amp;showinfo=0';
 
-            $result.find('.video iframe').attr('src', videoUrl);
+            var videoId = question.answers[currentCandidate.id].youtubeVideoId;
+            var videoUrl = '//www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&amp;rel=0&amp;showinfo=0';
+            var thumbnailUrl = '//img.youtube.com/vi/' + videoId + '/hqdefault.jpg';
+
+            var $img = $result.find('.video > div');
+            var $iframe = $result.find('.video iframe');
+            $img.css('background-image', 'url(' + thumbnailUrl + ')');
+
+            $img.on('click', function() {
+              $iframe.removeClass('hidden');
+              $iframe.attr('src', videoUrl);
+            });
 
             $page.find('.results').append($result);
           });
@@ -756,6 +766,7 @@
 
           $('button.back', $page).on('click', function(event) {
             event.preventDefault();
+            $page.find('.video iframe').attr('src', '');
             window.location.hash = '#page-2/' + currentCandidate.id;
           });
 

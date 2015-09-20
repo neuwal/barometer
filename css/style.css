@@ -59,7 +59,7 @@ h2 {
     font-weight: bold;
 }
 
-.result img {
+.result .answer img {
     width: 100px;
     height: 100px;
     margin-bottom: 15px;
@@ -69,11 +69,35 @@ h2 {
     margin: 0 auto;
 }
 
-.video div {
+.video > div {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
     position: relative;
     width: 100%;
     height: 0;
     padding-bottom: 56.25%; /* 9 / 16 */
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.video .playHandle {
+    background-image: url(../images/YouTube-icon-dark.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.90;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -40px;
+    margin-left: -40px;
+    cursor: pointer;
+}
+
+.video .playHandle:hover {
+    background-image: url(../images/YouTube-icon-full_color.png);
 }
 
 .video iframe {
@@ -84,6 +108,12 @@ h2 {
     right: 0;
     width: 100%;
     height: 100%;
+}
+
+.video img {
+    width: 100%;
+    position: relative;
+    top: -52px;
 }
 
 .finalResult {
