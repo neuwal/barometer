@@ -672,6 +672,7 @@
         }
 
         function initPage1() {
+          $('html,body').scrollTop(0);
           var $candidates = $('.candidates').empty();
 
           $(candidates).each(function(index, candidate) {
@@ -696,6 +697,7 @@
         }
 
         function initPage2(subpage) {
+          $('html,body').scrollTop(0);
           currentCandidate = getCandidateById(subpage);
           if (!currentCandidate) {
             showPage();
@@ -734,7 +736,6 @@
 
           $('button.back', $page).on('click', function(event) {
             event.preventDefault();
-            $('html,body').scrollTop(0);
             window.location.hash = '#page-1';
           });
 
@@ -750,12 +751,12 @@
 
           $('button.next', $page).on('click', function(event) {
             event.preventDefault();
-            $('html,body').scrollTop(0);
             window.location.hash = '#page-3/' + currentCandidate.id;
           });
         }
 
         function initPage3(subpage) {
+          $('html,body').scrollTop(0);
           currentCandidate = getCandidateById(subpage);
           if (!currentCandidate) {
             showPage();
@@ -823,14 +824,12 @@
           $('button.back', $page).on('click', function(event) {
             event.preventDefault();
             $page.find('.video iframe').attr('src', '');
-            $('html,body').scrollTop(0);
             window.location.hash = '#page-2/' + currentCandidate.id;
           });
 
           $('button.start', $page).on('click', function(event) {
             event.preventDefault();
             $page.find('.video iframe').attr('src', '');
-            $('html,body').scrollTop(0);
             window.location.hash = '#';
           });
         }
